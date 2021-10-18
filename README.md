@@ -41,7 +41,8 @@ Here are some features of this implementation:
 
 ## Output
 ![Dashboard Screenshot](Documents/Dashboard%20Image.png?raw=true "Dashboard Screenshot")
-![Dashboard Video](https://user-images.githubusercontent.com/21313710/137774469-e0ea2857-de4e-4256-bb38-7007ba338b37.mp4)
+
+https://user-images.githubusercontent.com/21313710/137774469-e0ea2857-de4e-4256-bb38-7007ba338b37.mp4
 
 ## Contributors
 - [Jacob Celestine](https://jacobcelestine.com/)
