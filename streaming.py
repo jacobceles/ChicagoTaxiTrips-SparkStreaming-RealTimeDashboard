@@ -1,8 +1,7 @@
 """
 Questions:
 1. Rate of tipping over years?
-2. Popular taxi trips days:
-    Number of records vs Year
+2. Popular taxi trips days?
 3. Mode of payment over years?
 4. Total miles travelled across years?
 5. Total time travelled across years?
@@ -58,12 +57,8 @@ def foreach_batch_function(df, epoch_id):
         data = [p.count_per_category for p in df.select("count_per_category").collect()]
         if payment_type == "cash":
             request_data = {'labels2': str(labels), 'values2_1': str(data)}
-        elif payment_type == "mobile":
-            request_data = {'labels2': str(labels), 'values2_2': str(data)}
-        elif payment_type == "prcard":
-            request_data = {'labels2': str(labels), 'values2_3': str(data)}
         elif payment_type == "credit card":
-            request_data = {'labels2': str(labels), 'values2_4': str(data)}
+            request_data = {'labels2': str(labels), 'values2_2': str(data)}
         else:
             print("Invalid type: " + str(payment_type))
     elif 'total_trip_miles' in df.columns:
@@ -96,7 +91,7 @@ if __name__ == "__main__":
     dataframe = spark.readStream.format("csv").schema(schema)\
         .option("header", True).option("cleanSource", "off")\
         .option("ignoreLeadingWhiteSpace", True).option("mode", "dropMalformed")\
-        .option("maxFilesPerTrigger", 1).load("source")
+        .option("maxFilesPerTrigger", 1).load("H:/Project 1/source/")
 
     # Cleaning
     dataframe = dataframe.toDF(*[c.lower().replace(" ", "_") for c in dataframe.columns]) \
@@ -105,7 +100,8 @@ if __name__ == "__main__":
         .withColumn('date', to_date(col('trip_start_timestamp')))\
         .withColumn('year', year(col('trip_start_timestamp')))\
         .withColumn('month', month(col('trip_start_timestamp')))\
-        .withColumn('day', dayofmonth(col('trip_start_timestamp')))
+        .withColumn('day', dayofmonth(col('trip_start_timestamp')))\
+        .na.drop(subset=["Company"])
 
     # Create a view
     dataframe.createOrReplaceTempView("taxi_trips")
@@ -114,19 +110,13 @@ if __name__ == "__main__":
     spark.sql("""SELECT year, SUM(tips) AS total_tips FROM taxi_trips GROUP BY year""")\
         .writeStream.outputMode("complete").foreachBatch(foreach_batch_function).start()
 
-    # 2. Popular taxi trips days: Number of records vs Year
+    # 2. Popular taxi trips days?
     spark.sql("""SELECT date, COUNT(trip_id) AS total_taxi_trip FROM taxi_trips GROUP BY date""")\
         .writeStream.outputMode("complete").foreachBatch(foreach_batch_function).start()
 
     # 3. Mode of payment over year
     spark.sql("""SELECT payment_type, year, COUNT(trip_id) AS count_per_category FROM taxi_trips
     GROUP BY payment_type, year HAVING lower(payment_type)=='cash'""")\
-        .writeStream.outputMode("complete").foreachBatch(foreach_batch_function).start()
-    spark.sql("""SELECT payment_type, year, COUNT(trip_id) AS count_per_category FROM taxi_trips
-    GROUP BY payment_type, year HAVING lower(payment_type)=='mobile'""")\
-        .writeStream.outputMode("complete").foreachBatch(foreach_batch_function).start()
-    spark.sql("""SELECT payment_type, year, COUNT(trip_id) AS count_per_category FROM taxi_trips
-    GROUP BY payment_type, year HAVING lower(payment_type)=='prcard'""")\
         .writeStream.outputMode("complete").foreachBatch(foreach_batch_function).start()
     spark.sql("""SELECT payment_type, year, COUNT(trip_id) AS count_per_category FROM taxi_trips
     GROUP BY payment_type, year HAVING lower(payment_type)=='credit card'""")\

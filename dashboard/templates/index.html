@@ -298,21 +298,9 @@
         	                 {{item}},
                        	{% endfor %}]
                  }, {
-                   label: "Mobile",
+                   label: "Credit Card",
                    backgroundColor: "#FFB2E6",
                    data: [{% for item in values2_2 %}
-        	                 {{item}},
-                       	{% endfor %}]
-                 }, {
-                   label: "PR Card",
-                   backgroundColor: "#FFC09F",
-                   data: [{% for item in values2_3 %}
-        	                 {{item}},
-                       	{% endfor %}]
-                 }, {
-                   label: "Credit Card",
-                   backgroundColor: "#2708A0",
-                   data: [{% for item in values2_4 %}
         	                 {{item}},
                        	{% endfor %}]
                  }
@@ -333,22 +321,16 @@
       var src_Labels2 = [];
       var src_Data2_1 = [];
       var src_Data2_2 = [];
-      var src_Data2_3 = [];
-      var src_Data2_4 = [];
       setInterval(function(){
        	$.getJSON('/refreshData', {
        	}, function(data) {
            	src_Labels2 = data.labels2;
            	src_Data2_1 = data.values2_1;
             src_Data2_2 = data.values2_2;
-           	src_Data2_3 = data.values2_3;
-           	src_Data2_4 = data.values2_4;
        	});
        	mychart2.data.labels = src_Labels2;
        	mychart2.data.datasets[0].data = src_Data2_1;
        	mychart2.data.datasets[1].data = src_Data2_2;
-       	mychart2.data.datasets[2].data = src_Data2_3;
-       	mychart2.data.datasets[3].data = src_Data2_4;
        	mychart2.update();
       },1000);
 
