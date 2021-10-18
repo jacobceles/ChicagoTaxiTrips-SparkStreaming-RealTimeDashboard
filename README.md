@@ -23,8 +23,11 @@ Here are some features of this implementation:
 <li> Which company makes the most trips per year? </li>
 </ol>
 
+## Implementation
+![High Level Design](Documents/Implementation%20HLD.png?raw=true "High Level Design")
+
 ## Folder Structure
-    ├── Screenshots                                 # Holds Images and Videos
+    ├── Documents                                   # Holds info about the project
     ├── dashboard                                   # Code for the Flask application
     │   ├── static                                      # Holds static files associated with the dashboard
     │   │   ├── css                                         # Holds styling files for the dashboard
@@ -36,11 +39,11 @@ Here are some features of this implementation:
     ├── README.md                                   # Read this first
     └── streaming.py                                # Streaming application which reads the files and executes operations in PySpark using Structured Streaming
 
+## Output
+![Dashboard Screenshot](Documents/Dashboard%20Image.png?raw=true "Dashboard Screenshot")
+![Dashboard Video](Documents/Dashboard%20Video.mp4?raw=true "Dashboard Video")
+
 ## Contributors
 - [Jacob Celestine](https://jacobcelestine.com/)
 - [Harsh Patel](https://github.com/hkp98)
 - [Pulak Raj](https://github.com/PulakRaj)
-
-## Screenshots / Video
-![Home Page](/Screenshots/Dashboard Image.png?raw=true "Dashboard")
-![Form Input](/Screenshots/Dashboard Video.mp4?raw=true "Dashboard Video")
