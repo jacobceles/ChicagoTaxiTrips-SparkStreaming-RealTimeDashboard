@@ -40,6 +40,8 @@ Here are some features of this implementation:
     └── streaming.py                                # Streaming application which reads the files and executes operations in PySpark using Structured Streaming
 
 ## Output
+A full demo including code walkthrough and live demo can be [found here](https://youtu.be/SPwN13iuq78) (redirects to YouTube).
+
 ![Dashboard Screenshot](Documents/Dashboard%20Image.png?raw=true "Dashboard Screenshot")
 
 https://user-images.githubusercontent.com/21313710/137774469-e0ea2857-de4e-4256-bb38-7007ba338b37.mp4
